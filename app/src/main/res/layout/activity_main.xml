@@ -16,6 +16,7 @@
         android:background="@color/background"
         app:menu="@menu/main_menu"
         app:headerLayout="@layout/nevigation_header"
+
         />
 
     <LinearLayout
@@ -28,15 +29,16 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp">
+            >
 
             <ImageView
                 android:id="@+id/menu"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
                 android:contentDescription="@string/menu"
-                android:src="@drawable/ic_baseline_menu_24" />
+                android:src="@drawable/ic_baseline_menu_24"
+                android:layout_margin="15dp"/>
 
             <ProgressBar
                 android:id="@+id/pr_main"
@@ -44,6 +46,25 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:visibility="invisible"/>
+
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/imgSliderHome"
+                android:layout_width="match_parent"
+                android:layout_height="275dp"
+                app:sliderAnimationDuration="500"
+                app:sliderAutoCycleDirection="back_and_forth"
+                app:sliderAutoCycleEnabled="true"
+                app:sliderIndicatorAnimationDuration="600"
+                app:sliderIndicatorGravity="center_horizontal|bottom"
+                app:sliderIndicatorMargin="15dp"
+                app:sliderIndicatorOrientation="horizontal"
+                app:sliderIndicatorPadding="3dp"
+                app:sliderIndicatorRadius="2dp"
+                app:sliderIndicatorSelectedColor="#5A5A5A"
+                app:sliderIndicatorUnselectedColor="#FFF"
+                app:sliderScrollTimeInSec="1"
+                app:sliderStartAutoCycle="true"
+                />
         </RelativeLayout>
 
         <!--<TextView
@@ -69,7 +90,8 @@
             android:inputType="text"
             android:padding="15dp"
             android:textSize="20sp"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/noth"
