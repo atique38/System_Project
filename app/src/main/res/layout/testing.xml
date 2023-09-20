@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/slider_img"
         android:layout_width="match_parent"
         android:layout_height="275dp"
         android:scaleType="centerCrop"

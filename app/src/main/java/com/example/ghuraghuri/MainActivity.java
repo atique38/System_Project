@@ -2,6 +2,7 @@ package com.example.ghuraghuri;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +33,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -40,40 +45,59 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     ImageView menu_img;
-    RecyclerView recyclerView;
-    RecViewAdapter adapter;
+    //RecyclerView recyclerView;
+    //RecViewAdapter adapter;
     TextView nothing;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ProgressBar progressBar;
-    EditText search;
+    //EditText search;
+    SliderView slide;
+    GridLayout gridLayout;
 
     FirebaseAuth auth;
+
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         menu_img = findViewById(R.id.menu);
-        nothing=findViewById(R.id.noth);
+        //nothing=findViewById(R.id.noth);
         drawerLayout=findViewById(R.id.drawer);
         navigationView=findViewById(R.id.nav);
         progressBar=findViewById(R.id.pr_main);
-        search =findViewById(R.id.search_edt);
+        //search =findViewById(R.id.search_edt);
+        slide=findViewById(R.id.imgSliderHome);
+        gridLayout=findViewById(R.id.grid);
 
         auth=FirebaseAuth.getInstance();
 
-        recyclerView=findViewById(R.id.recView);
+
+
+        /*recyclerView=findViewById(R.id.recView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter=new RecViewAdapter(MainActivity.this);
+        adapter=new RecViewAdapter(MainActivity.this);*/
 
        // recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false));
 
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
 
-        search.addTextChangedListener(new TextWatcher() {
+        //home activity images
+        int [] images={R.drawable.test1,
+                R.drawable.test2,
+                R.drawable.test3};
+
+        ImageSliderAdapter imageSliderAdapter=new ImageSliderAdapter(images,this);
+        slide.setSliderAdapter(imageSliderAdapter);
+        slide.setIndicatorAnimation(IndicatorAnimationType.WORM);
+        slide.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
+        slide.startAutoCycle();
+
+        /*search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -90,11 +114,11 @@ public class MainActivity extends AppCompatActivity {
                 filter(text);
 
             }
-        });
+        });*/
 
-        readfav();
+        //readfav();
 
-        readData(new callBack() {
+        /*readData(new callBack() {
             @Override
             public void onCallback(ArrayList<String> plc_name, ArrayList<String> rating, ArrayList<String> tag) {
 
@@ -129,25 +153,16 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-        });
+        });*/
 
+        setCardEvent(gridLayout);
 
-
-
-
+        checkUser();
         menu_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Menu menu=navigationView.getMenu();
-                MenuItem menuItem=menu.findItem(R.id.adm);
-                if(Constant.admin_uid.equals(Objects.requireNonNull(auth.getCurrentUser()).getUid()))
-                {
-                    menuItem.setVisible(true);
-                }
-                else
-                {
-                    menuItem.setVisible(false);
-                }
+
+
 
                 if(!drawerLayout.isDrawerOpen(GravityCompat.START))
                 {
@@ -219,16 +234,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    interface callBack
+
+
+    /*interface callBack
     {
 
         void onCallback(ArrayList<String> plc_name,
                         ArrayList<String > rating,
                         ArrayList<String> tag
                         );
-    }
+    }*/
 
-    void readData(final callBack cb)
+    /*void readData(final callBack cb)
     {
         DatabaseReference ref2=FirebaseDatabase.getInstance().getReference().child("Admin");
         ref2.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -341,6 +358,63 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }*/
+
+    void setCardEvent(GridLayout layout)
+    {
+        int i;
+        for(i=0;i<layout.getChildCount();i++)
+        {
+            CardView cardView=(CardView)layout.getChildAt(i);
+            final int cnt=i;
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent;
+
+                    switch (cnt)
+                    {
+                        case 0:
+                            intent=new Intent(MainActivity.this,SpotList.class);
+                            startActivity(intent);
+                            break;
+                    }
+
+                }
+            });
+
+        }
+    }
+
+    void checkUser(){
+        uid= Objects.requireNonNull(auth.getCurrentUser()).getUid();
+        Menu menu=navigationView.getMenu();
+        MenuItem menuItem=menu.findItem(R.id.adm);
+
+        DatabaseReference ref2= FirebaseDatabase.getInstance().getReference().child("Admin");
+        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Constant.admin_uid=String.valueOf(snapshot.getValue());
+
+                if(Constant.admin_uid.equals(uid))
+                {
+                    menuItem.setVisible(true);
+                }
+                else
+                {
+                    menuItem.setVisible(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 
     @Override

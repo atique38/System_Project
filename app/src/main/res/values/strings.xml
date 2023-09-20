@@ -87,5 +87,11 @@
     <string name="feedback">Feedback</string>
     <string name="complete">Complete</string>
     <string name="no_tour_plan_added">No Tour Plan Added</string>
+    <string name="shop">Shop</string>
+    <string name="spots">Spots</string>
+    <string name="cart">Cart</string>
+    <string name="packages">Packages</string>
+    <string name="blogs">Blogs</string>
+    <string name="guide">Guide</string>
 
 </resources>
