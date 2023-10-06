@@ -10,8 +10,13 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +35,16 @@ import java.util.regex.Pattern;
 public class SignUp extends AppCompatActivity {
 
     TextView sign_in;
-    EditText full_name,email,pass;
+    EditText full_name,email,pass,agencyName,ownerName;
     Button btn;
-    TextInputLayout email_input,pass_input;
+    TextInputLayout email_input,pass_input,userLayout;
     ProgressBar progressBar;
+    //CheckBox user,agency;
+    LinearLayout agLaout;
+    RadioGroup radioGroup;
 
+    boolean check=false;
+    String role;
     FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,34 @@ public class SignUp extends AppCompatActivity {
         pass_input=findViewById(R.id.pass_input_signup);
         progressBar=findViewById(R.id.pr_sign_up);
 
+        agencyName=findViewById(R.id.ag_name);
+        ownerName=findViewById(R.id.ag_owner_name);
+        userLayout=findViewById(R.id.user_layout);
+        agLaout=findViewById(R.id.agency_layout);
+        radioGroup=findViewById(R.id.radio_grp_sign_up);
+
+        role="User";
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int i) {
+                RadioButton radioButton=group.findViewById(i);
+                role=radioButton.getText().toString();
+
+                if(role.equals("User"))
+                {
+                    agLaout.setVisibility(View.GONE);
+                    userLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    agLaout.setVisibility(View.VISIBLE);
+                    userLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
+
         auth=FirebaseAuth.getInstance();
 
         sign_in.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +101,9 @@ public class SignUp extends AppCompatActivity {
         full_name.addTextChangedListener(watcher);
         email.addTextChangedListener(watcher);
         pass.addTextChangedListener(watcher);
+        agencyName.addTextChangedListener(watcher);
+        ownerName.addTextChangedListener(watcher);
+
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,12 +124,23 @@ public class SignUp extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String name, password,em;
+            String name, password,em,agName,o_name;
             name=full_name.getText().toString().trim();
             em=email.getText().toString().trim();
             password=pass.getText().toString().trim();
+            agName=agencyName.getText().toString().trim();
+            o_name=ownerName.getText().toString().trim();
 
-            btn.setEnabled(!name.isEmpty() && !password.isEmpty() && !em.isEmpty());
+
+            if(role.equals("User"))
+            {
+                btn.setEnabled(!name.isEmpty() && !password.isEmpty() && !em.isEmpty());
+            }
+            else
+            {
+                btn.setEnabled(!agName.isEmpty() && !o_name.isEmpty() && !password.isEmpty() && !em.isEmpty());
+            }
+
 
             switch (Constant.ch)
             {
@@ -171,10 +223,25 @@ public class SignUp extends AppCompatActivity {
     void savedata()
     {
         String name=full_name.getText().toString().trim();
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference()
-                .child("User").child(Objects.requireNonNull(auth.getCurrentUser()).getUid());
 
-        ref.child("Name").setValue(name);
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference()
+                .child(role).child(Objects.requireNonNull(auth.getCurrentUser()).getUid());
+
+        if(role.equals("User"))
+        {
+            ref.child("Name").setValue(name);
+        }
+        else
+        {
+            String ag_name,o_name;
+            ag_name=agencyName.getText().toString().trim();
+            o_name=ownerName.getText().toString().trim();
+
+            ref.child("Agency Name").setValue(ag_name);
+            ref.child("Owner name").setValue(o_name);
+        }
+
+
     }
 
     @Override

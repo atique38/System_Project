@@ -14,6 +14,7 @@ public class Constant {
     public static String admin_uid=null;
     public static String totalRatings=null;
     public static String rat=null;
+    public static String role=null;
    /* public static String uName=null;
     public static String rev=null;
     public static String urating= null;
@@ -64,6 +65,16 @@ public class Constant {
     public static ArrayList<String> where=new ArrayList<>();
     public static ArrayList<String> todo=new ArrayList<>();
     public static ArrayList<String> step=new ArrayList<>();
+
+    public static ArrayList<String> productKey=new ArrayList<>();
+    public static ArrayList<String> thumbnail=new ArrayList<>();
+    public static ArrayList<String> productRating=new ArrayList<>();
+    public static ArrayList<String> productPrice=new ArrayList<>();
+    public static ArrayList<String> productDescription=new ArrayList<>();
+    public static ArrayList<String> productFeatures=new ArrayList<>();
+    public static ArrayList<String> productName=new ArrayList<>();
+    public static ArrayList<String> productImg=new ArrayList<>();
+
 
     public static int stepCount=0;
 

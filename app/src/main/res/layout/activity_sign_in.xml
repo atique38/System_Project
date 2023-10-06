@@ -12,33 +12,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/pr_sign_in"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/head"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:visibility="invisible"/>
+            android:layout_margin="20dp">
+            <ProgressBar
+                android:id="@+id/pr_sign_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/carter_one"
+                android:text="@string/log_in"
+                android:textColor="@color/greenish_blue"
+                android:textSize="30sp" />
+        </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center_vertical"
-            android:layout_below="@+id/pr_sign_in"
-            android:layout_marginTop="40dp"
+            android:layout_below="@+id/head"
+            android:layout_marginTop="25dp"
             >
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/carter_one"
-                android:text="@string/log_in"
-                android:textColor="@color/greenish_blue"
-                android:textSize="40sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -53,6 +58,47 @@
                     android:orientation="vertical"
                     android:background="#F5FBFB"
                     >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp">
+
+                        <RadioGroup
+                            android:id="@+id/radio_grp_sign_in"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/check_user_sign_in"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:text="@string/user"
+                                android:layout_marginEnd="40dp"
+                                android:checked="true"
+                                />
+                            <RadioButton
+                                android:id="@+id/check_agency_sign_in"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:layout_marginEnd="40dp"
+                                android:text="@string/agency"
+                                />
+
+                            <RadioButton
+                                android:id="@+id/check_admin_sign_in"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:text="@string/admin"
+                                />
+                        </RadioGroup>
+                    </RelativeLayout>
 
 
                     <com.google.android.material.textfield.TextInputLayout

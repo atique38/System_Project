@@ -124,18 +124,6 @@ public class SpotList extends AppCompatActivity {
 
     void readData(final callBack cb)
     {
-        DatabaseReference ref2= FirebaseDatabase.getInstance().getReference().child("Admin");
-        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Constant.admin_uid=String.valueOf(snapshot.getValue());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Places");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {

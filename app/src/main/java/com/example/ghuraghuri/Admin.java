@@ -908,7 +908,7 @@ public class Admin extends AppCompatActivity {
                                     public void onSuccess(Uri uri) {
 
                                         String url=uri.toString();
-                                        System.out.println(url);
+                                        //System.out.println(url);
                                         ref2.child(title).setValue(url);
                                         ref3.child(title).setValue(url);
                                     }

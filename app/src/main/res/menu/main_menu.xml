@@ -27,12 +27,12 @@
             android:title="@string/any_suggestion"
             android:icon="@drawable/ic_twotone_feedback"
             />
-        <item
+        <!--<item
             android:id="@+id/adm"
             android:title="@string/admin"
             android:icon="@drawable/ic_twotone_admin_panel_settings"
             android:visible="false"
-            />
+            />-->
         <item
             android:id="@+id/log"
             android:title="@string/log_out"

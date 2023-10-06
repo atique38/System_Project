@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -34,9 +41,10 @@ public class SignIn extends AppCompatActivity {
     TextView create_ac,forget;
     ProgressBar pr;
     CheckBox checkBox;
+    RadioGroup radioGroup;
 
     FirebaseAuth auth;
-
+    String uid;
     boolean check=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,16 @@ public class SignIn extends AppCompatActivity {
         pr=findViewById(R.id.pr_sign_in);
         checkBox=findViewById(R.id.cb);
         forget=findViewById(R.id.fp_txt);
+        radioGroup=findViewById(R.id.radio_grp_sign_in);
+
+        Constant.role="User";
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int i) {
+                RadioButton radioButton=group.findViewById(i);
+                Constant.role=radioButton.getText().toString();
+            }
+        });
 
         auth=FirebaseAuth.getInstance();
 
@@ -164,15 +182,84 @@ public class SignIn extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful())
                     {
-                        pr.setVisibility(View.INVISIBLE);
-                        Toast.makeText(SignIn.this,"Sign in Successful!",Toast.LENGTH_SHORT).show();
-                        SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
-                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit=preferences.edit();
-                        edit.putBoolean("rem",check);
-                        edit.apply();
 
-                        Intent intent=new Intent(SignIn.this,MainActivity.class);
-                        startActivity(intent);
+                        DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
+                        String currUser= Objects.requireNonNull(auth.getCurrentUser()).getUid();
+
+                        if(Constant.role.equals("Admin")){
+                            reference.child("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    uid = Objects.requireNonNull(snapshot.getValue()).toString();
+                                    if(uid.equals(currUser))
+                                    {
+                                        pr.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(SignIn.this,"Sign in Successful!",Toast.LENGTH_SHORT).show();
+                                        SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
+                                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit=preferences.edit();
+                                        edit.putBoolean("rem",check);
+                                        edit.apply();
+
+                                        Intent intent=new Intent(SignIn.this,AdminDashboard.class);
+                                        startActivity(intent);
+                                    }
+                                    else
+                                    {
+                                        pr.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(SignIn.this,"Invalid User.",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                        else
+                        {
+                            reference.child(Constant.role).child(currUser).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.exists())
+                                    {
+                                        pr.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(SignIn.this,"Sign in Successful!",Toast.LENGTH_SHORT).show();
+                                        SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
+                                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit=preferences.edit();
+                                        edit.putBoolean("rem",check);
+                                        edit.apply();
+
+                                        Intent intent;
+                                        if(Constant.role.equals("Agency"))
+                                        {
+                                            intent=new Intent(SignIn.this,Agency.class);
+                                            startActivity(intent);
+                                        }
+                                        else
+                                        {
+                                            intent=new Intent(SignIn.this,MainActivity.class);
+                                            startActivity(intent);
+                                        }
+
+
+
+
+                                    }
+                                    else
+                                    {
+                                        pr.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(SignIn.this,"Invalid User.",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+
                     }
                     else
                     {

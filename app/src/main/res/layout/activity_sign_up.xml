@@ -12,23 +12,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/pr_sign_up"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:visibility="invisible"/>
+            android:layout_margin="20dp">
+            <ProgressBar
+                android:id="@+id/pr_sign_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:paddingTop="10dp"
-            android:fontFamily="@font/carter_one"
-            android:text="@string/create_naccount"
-            android:textColor="@color/greenish_blue"
-            android:textSize="40sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/carter_one"
+                android:text="@string/create_naccount"
+                android:layout_centerInParent="true"
+                android:textColor="@color/greenish_blue"
+                android:textSize="28sp" />
+        </RelativeLayout>
+
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -43,21 +48,57 @@
                 android:orientation="vertical"
                 android:background="#F5FBFB"
                 >
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center">
 
+
+
+                    <RadioGroup
+                        android:id="@+id/radio_grp_sign_up"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/check_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:text="@string/user"
+                            android:layout_marginEnd="30dp"
+                            android:checked="true"
+                            />
+                        <RadioButton
+                            android:id="@+id/check_agency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:text="@string/agency"
+                            />
+                    </RadioGroup>
+
+
+                </RelativeLayout>
+
+                <!--user layout-->
                 <com.google.android.material.textfield.TextInputLayout
-
+                    android:id="@+id/user_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
                     android:hint="@string/full_name"
                     app:boxStrokeColor="@color/text"
                     app:boxStrokeWidthFocused="2dp"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/black"
                     app:hintTextColor="@color/black"
+                    android:layout_margin="20dp"
                     app:startIconDrawable="@drawable/ic_outline_account_circle_name"
                     app:startIconTint="@color/black"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/f_name"
@@ -69,13 +110,70 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <LinearLayout
+                    android:id="@+id/agency_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/agency_name"
+                        app:boxStrokeColor="@color/text"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/black"
+                        app:hintTextColor="@color/black"
+                        android:layout_marginBottom="20dp"
+                        app:startIconDrawable="@drawable/ic_baseline_corporate_fare_24"
+                        app:startIconTint="@color/black"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/ag_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:textColor="@color/black"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/owner_name"
+                        app:boxStrokeColor="@color/text"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/black"
+                        app:hintTextColor="@color/black"
+                        app:startIconDrawable="@drawable/ic_outline_account_circle_name"
+                        app:startIconTint="@color/black"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/ag_owner_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:textColor="@color/black"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/email_input_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:hint="@string/email"
                     app:boxStrokeColor="@color/text"
                     app:boxStrokeWidthFocused="2dp"
@@ -100,15 +198,16 @@
                     android:id="@+id/pass_input_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
                     android:hint="@string/password"
                     app:boxStrokeColor="@color/text"
                     app:boxStrokeWidthFocused="2dp"
                     app:endIconMode="password_toggle"
                     app:endIconTint="@color/black"
                     app:hintTextColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
                     app:startIconDrawable="@drawable/ic_outline_lock"
                     app:startIconTint="@color/black"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -122,6 +221,8 @@
                         tools:ignore="SpeakableTextPresentCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/sign_up_btn"
