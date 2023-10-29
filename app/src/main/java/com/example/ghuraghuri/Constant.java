@@ -74,6 +74,24 @@ public class Constant {
     public static ArrayList<String> productFeatures=new ArrayList<>();
     public static ArrayList<String> productName=new ArrayList<>();
     public static ArrayList<String> productImg=new ArrayList<>();
+    public static ArrayList<String> productQuantity=new ArrayList<>();
+    public static ArrayList<String> productSubtotal=new ArrayList<>();
+    public static ArrayList<String> productSpecification=new ArrayList<>();
+    public static ArrayList<String> maxQuantity=new ArrayList<>();
+    public static ArrayList<String> cartQuantity=new ArrayList<>();
+    public static ArrayList<String> productId=new ArrayList<>();
+
+    //for weather
+    public static ArrayList<String> temperature=new ArrayList<>();
+    public static ArrayList<String> feelsLike=new ArrayList<>();
+    public static ArrayList<String> humidity=new ArrayList<>();
+    public static ArrayList<String> wind=new ArrayList<>();
+    public static ArrayList<String> rain=new ArrayList<>();
+    public static ArrayList<StringBuilder> weatherStatus=new ArrayList<>();
+    public static ArrayList<StringBuilder> weatherDescription=new ArrayList<>();
+    public static ArrayList<String> weatherIcon=new ArrayList<>();
+    public static ArrayList<String> weatherDate=new ArrayList<>();
+    public static ArrayList<String> weatherTime=new ArrayList<>();
 
 
     public static int stepCount=0;

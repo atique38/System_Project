@@ -5,16 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,20 +33,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class Description extends AppCompatActivity {
-    TextView place_name,description,cost,rating;
+    TextView place_name,description,cost,rating,temperature,feel,humidity,weatherStatus,weatherDescription;
     GridLayout gridLayout;
     ProgressBar progressBar;
     RatingBar ratingBar;
     Button go;
+    ImageView weatherIcon;
+    CardView weather;
 
-    String place_id,name,plc_name;
+    String place_id,name,plc_name,lat,lon,zip;
 
     FirebaseAuth auth;
     @Override
@@ -53,6 +69,14 @@ public class Description extends AppCompatActivity {
         rating=findViewById(R.id.rating_text);
         ratingBar=findViewById(R.id.rating_icon);
         go=findViewById(R.id.go_btn);
+        temperature=findViewById(R.id.curr_temp);
+        feel=findViewById(R.id.feel_temp);
+        humidity=findViewById(R.id.humidity);
+        weatherStatus=findViewById(R.id.weather_cond);
+        weatherDescription=findViewById(R.id.weather_desc);
+        weatherIcon=findViewById(R.id.weather_icon);
+        weather=findViewById(R.id.weather_layout);
+
 
         place_id=getIntent().getStringExtra("id");
         auth=FirebaseAuth.getInstance();
@@ -98,6 +122,18 @@ public class Description extends AppCompatActivity {
 
             }
         });
+
+
+
+        weather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Description.this,WeatherDetails.class);
+                intent.putExtra("lat",lat);
+                intent.putExtra("lon",lon);
+                startActivity(intent);
+            }
+        });
     }
 
     void getInfo()
@@ -112,6 +148,7 @@ public class Description extends AppCompatActivity {
                 cst+=" TK";
                 cost.setText(cst);
                 progressBar.setVisibility(View.GONE);
+                weatherInfo();
             }
         });
 
@@ -135,6 +172,7 @@ public class Description extends AppCompatActivity {
                 nm=String.valueOf(snapshot.child("Name").getValue());
                 des=String.valueOf(snapshot.child("Description").getValue());
                 cst=String.valueOf(snapshot.child("Cost").getValue());
+                zip=String.valueOf(snapshot.child("Zip").getValue());
 
                 Constant.totalRatings= Objects.requireNonNull(snapshot.child("Total ratings").getValue()).toString();
                 float rt=Float.parseFloat(String.valueOf(snapshot.child("Ratings").getValue()));
@@ -246,6 +284,13 @@ public class Description extends AppCompatActivity {
                             startActivity(intent);
                             //Toast.makeText(Description.this, "Speciality Coming Soon", Toast.LENGTH_SHORT).show();
                             break;
+                        case 10:
+                            Constant.point='m';
+                            intent=new Intent(Description.this,WebViewList.class);
+                            intent.putExtra("plc_id",place_id);
+                            startActivity(intent);
+                            //Toast.makeText(Description.this, "Speciality Coming Soon", Toast.LENGTH_SHORT).show();
+                            break;
                     }
 
                 }
@@ -253,4 +298,71 @@ public class Description extends AppCompatActivity {
 
         }
     }
+
+    void weatherInfo(){
+        String url="https://api.openweathermap.org/data/2.5/weather?zip="+zip+",BD&appid=9dd5ca196deda19d4cbf43066a21c4f2";
+        RequestQueue queue= Volley.newRequestQueue(Description.this);
+
+        JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject object=response.getJSONObject("main");
+                    String temp,feels,hum,icon;
+                    StringBuilder status=new StringBuilder();
+                    StringBuilder details=new StringBuilder();
+
+                    temp=object.getString("temp");
+                    feels=object.getString("feels_like");
+                    hum=object.getString("humidity");
+
+                    int t= (int) (Double.parseDouble(temp)-273.15);
+                    temp=t+"°C";
+                    temperature.setText(temp);
+                    t= (int) (Double.parseDouble(feels)-273.15);
+                    feels="Feels like: "+t+"°C";
+                    feel.setText(feels);
+                    hum="Humidity: "+hum+"%";
+                    humidity.setText(hum);
+
+
+                    JSONArray array=response.getJSONArray("weather");
+                    for(int i=0;i<array.length();i++){
+                        if(i>0)
+                        {
+                            status.append(", ");
+                        }
+                        JSONObject object2=array.getJSONObject(i);
+                        status.append(object2.getString("main"));
+                        details.append(object2.getString("description"));
+                        /*if(object2.has("main")){
+                            System.out.println(object2.getString("main"));
+                        }*/
+
+
+                    }
+                    JSONObject object3=response.getJSONObject("coord");
+                    lat=object3.getString("lat");
+                    lon=object3.getString("lon");
+
+                    icon=array.getJSONObject(0).getString("icon");
+                    String iconUrl="https://openweathermap.org/img/wn/"+icon+"@2x.png";
+                    Glide.with(Description.this).load(iconUrl).into(weatherIcon);
+                    weatherStatus.setText(status);
+                    weatherDescription.setText(details);
+                    //weatherIcon.setImageResource(R.drawable.sunny);
+                } catch (JSONException e) {
+                    Toast.makeText(Description.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Description.this, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(request);
+    }
+
+
 }

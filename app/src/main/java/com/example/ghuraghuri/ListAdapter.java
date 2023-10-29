@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -83,6 +82,13 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     context.startActivity(intent);
 
+                }
+                else if(Constant.point=='m')
+                {
+                    String url=Constant.url.get(position);
+                    Intent intent=new Intent(context, WebViewDisplay.class);
+                    intent.putExtra("url",url);
+                    context.startActivity(intent);
                 }
 
             }

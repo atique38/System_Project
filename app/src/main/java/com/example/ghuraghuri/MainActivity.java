@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     ProgressBar progressBar;
     SliderView slide;
-    RelativeLayout spot,shop;
+    RelativeLayout spot,shop,cart;
 
     FirebaseAuth auth;
 
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         slide=findViewById(R.id.imgSliderHome);
         spot=findViewById(R.id.spot_click);
         shop=findViewById(R.id.shop_click);
+        cart=findViewById(R.id.cart_click);
 
         auth=FirebaseAuth.getInstance();
 
@@ -94,6 +95,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,ProductList.class);
+                startActivity(intent);
+            }
+        });
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,Cart.class);
                 startActivity(intent);
             }
         });

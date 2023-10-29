@@ -114,5 +114,9 @@
     <string name="details">Details:</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="buy_now">Buy Now</string>
+    <string name="more_info">More Info.</string>
+    <string name="any_specification">Any specification?</string>
+    <string name="address">Address</string>
+    <string name="contact_no">Contact No.</string>
 
 </resources>

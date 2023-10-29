@@ -53,6 +53,7 @@ public class ProductList extends AppCompatActivity {
         Constant.productPrice.clear();
         Constant.productRating.clear();
         Constant.thumbnail.clear();
+        Constant.productQuantity.clear();
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -66,6 +67,7 @@ public class ProductList extends AppCompatActivity {
                     Constant.productFeatures.add(Objects.requireNonNull(data.child("features").getValue()).toString());
                     Constant.productRating.add(Objects.requireNonNull(data.child("rating").getValue()).toString());
                     Constant.thumbnail.add(Objects.requireNonNull(data.child("Thumbnail").getValue()).toString());
+                    Constant.productQuantity.add(Objects.requireNonNull(data.child("quantity").getValue()).toString());
                 }
                 setData();
             }

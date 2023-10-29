@@ -184,6 +184,7 @@
                    >
 
                    <RelativeLayout
+                       android:id="@+id/cart_click"
                        android:layout_width="match_parent"
                        android:layout_height="match_parent"
                        android:background="@drawable/places_background"
