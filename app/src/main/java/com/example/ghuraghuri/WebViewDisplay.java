@@ -25,7 +25,7 @@ public class WebViewDisplay extends AppCompatActivity {
         progressBar=findViewById(R.id.hr_progress);
 
         url=getIntent().getStringExtra("url");
-        System.out.println(url);
+        //System.out.println(url);
 
         webView.loadUrl(url);
 

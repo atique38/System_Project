@@ -75,10 +75,17 @@ public class SignIn extends AppCompatActivity {
 
         SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
         boolean remember=preferences.getBoolean("rem",false);
+        boolean rememberAgency=preferences.getBoolean("rem_ag",false);
 
         if(remember)
         {
+            Constant.role="User";
             Intent intent=new Intent(SignIn.this,MainActivity.class);
+            startActivity(intent);
+        }
+        else if(rememberAgency){
+            Constant.role="Agency";
+            Intent intent=new Intent(SignIn.this,Agency.class);
             startActivity(intent);
         }
 
@@ -227,17 +234,20 @@ public class SignIn extends AppCompatActivity {
                                         Toast.makeText(SignIn.this,"Sign in Successful!",Toast.LENGTH_SHORT).show();
                                         SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
                                         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit=preferences.edit();
-                                        edit.putBoolean("rem",check);
-                                        edit.apply();
+
 
                                         Intent intent;
                                         if(Constant.role.equals("Agency"))
                                         {
+                                            edit.putBoolean("rem_ag",check);
+                                            edit.apply();
                                             intent=new Intent(SignIn.this,Agency.class);
                                             startActivity(intent);
                                         }
                                         else
                                         {
+                                            edit.putBoolean("rem",check);
+                                            edit.apply();
                                             intent=new Intent(SignIn.this,MainActivity.class);
                                             startActivity(intent);
                                         }
@@ -274,7 +284,9 @@ public class SignIn extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(getIntent().getBooleanExtra("from_main",false) || getIntent().getBooleanExtra("from_fp",false))
+        if(getIntent().getBooleanExtra("from_main",false) ||
+                getIntent().getBooleanExtra("from_fp",false) ||
+                getIntent().getBooleanExtra("from_agency",false))
         {
             finishAffinity();
         }

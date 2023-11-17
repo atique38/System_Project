@@ -8,6 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="colorPrimary">#005099</color>
+    <color name="colorPrimaryDark">#005099</color>
+    <color name="colorAccent">#AFBDC4</color>
+
     <color name="background">#EDF4FC</color>
     <color name="text">#1EDFAA</color>
     <color name="greenish_blue">#08B38B</color>

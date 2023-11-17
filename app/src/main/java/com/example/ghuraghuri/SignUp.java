@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public class SignUp extends AppCompatActivity {
 
     TextView sign_in;
-    EditText full_name,email,pass,agencyName,ownerName;
+    EditText full_name,email,pass,agencyName,ownerName,contact,whatsapp;
     Button btn;
     TextInputLayout email_input,pass_input,userLayout;
     ProgressBar progressBar;
@@ -62,9 +62,13 @@ public class SignUp extends AppCompatActivity {
 
         agencyName=findViewById(R.id.ag_name);
         ownerName=findViewById(R.id.ag_owner_name);
+        contact=findViewById(R.id.ag_contactNo);
         userLayout=findViewById(R.id.user_layout);
         agLaout=findViewById(R.id.agency_layout);
         radioGroup=findViewById(R.id.radio_grp_sign_up);
+
+        contact=findViewById(R.id.ag_contactNo);
+        whatsapp=findViewById(R.id.ag_whatsapp_no);
 
         role="User";
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -124,21 +128,24 @@ public class SignUp extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String name, password,em,agName,o_name;
+            String name, password,em,agName,o_name,ag_contact,wa;
             name=full_name.getText().toString().trim();
             em=email.getText().toString().trim();
             password=pass.getText().toString().trim();
             agName=agencyName.getText().toString().trim();
             o_name=ownerName.getText().toString().trim();
+            ag_contact=contact.getText().toString().trim();
+            wa=whatsapp.getText().toString().trim();
 
 
             if(role.equals("User"))
             {
-                btn.setEnabled(!name.isEmpty() && !password.isEmpty() && !em.isEmpty());
+                btn.setEnabled(!name.isEmpty() && !password.isEmpty() && !em.isEmpty() && !ag_contact.isEmpty());
             }
             else
             {
-                btn.setEnabled(!agName.isEmpty() && !o_name.isEmpty() && !password.isEmpty() && !em.isEmpty());
+                btn.setEnabled(!agName.isEmpty() && !o_name.isEmpty() && !password.isEmpty() &&
+                        !em.isEmpty() && !ag_contact.isEmpty() && !wa.isEmpty());
             }
 
 
@@ -223,6 +230,7 @@ public class SignUp extends AppCompatActivity {
     void savedata()
     {
         String name=full_name.getText().toString().trim();
+        String em=email.getText().toString().trim();
 
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference()
                 .child(role).child(Objects.requireNonNull(auth.getCurrentUser()).getUid());
@@ -233,13 +241,18 @@ public class SignUp extends AppCompatActivity {
         }
         else
         {
-            String ag_name,o_name;
+            String ag_name,o_name,wa;
             ag_name=agencyName.getText().toString().trim();
             o_name=ownerName.getText().toString().trim();
+            wa=whatsapp.getText().toString().trim();
 
             ref.child("Agency Name").setValue(ag_name);
             ref.child("Owner name").setValue(o_name);
+            ref.child("Whatsapp").setValue(wa);
+            ref.child("Email").setValue(em);
         }
+        String ag_contact=contact.getText().toString().trim();
+        ref.child("Contact no").setValue(ag_contact);
 
 
     }

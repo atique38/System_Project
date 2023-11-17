@@ -118,5 +118,31 @@
     <string name="any_specification">Any specification?</string>
     <string name="address">Address</string>
     <string name="contact_no">Contact No.</string>
+    <string name="your_vlog">Your Vlog</string>
+    <string name="youtube_video_id">Youtube video id</string>
+    <string name="pick_a_date">Pick a date</string>
+    <string name="location">Location</string>
+    <string name="vlog">Vlog</string>
+    <string name="tour">Tour</string>
+    <string name="bookings">Bookings</string>
+    <string name="add_package">Add package</string>
+    <string name="package_name">Package Title</string>
+    <string name="cost">Cost</string>
+    <string name="duration">Duration</string>
+    <string name="whatsapp_no">Whatsapp No.</string>
+    <string name="tourist_capacity">Tourist Capacity</string>
+    <string name="fixed">Fixed</string>
+    <string name="negotiable">Negotiable</string>
+    <string name="segemnt_demo">e.g. transport, accommodation, tour plan etc. as your requirement</string>
+    <string name="details2">Details</string>
+    <string name="basic_info">Basic info.</string>
+    <string name="message">**You must save basic info first. Then you can fill up other segments of respective package**</string>
+    <string name="tour_packages">Tour Packages</string>
+    <string name="contact_info">Contact info.</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="email2">Email:</string>
+    <string name="phone_no">Phone no:</string>
+    <string name="number_of_tourist">Number of tourist</string>
+    <string name="no_bookings_pending">No bookings pending</string>
 
 </resources>

@@ -3,6 +3,8 @@ package com.example.ghuraghuri;
 import android.net.Uri;
 
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +13,14 @@ public class Constant {
     public static char ch='n';
     public static char point='n';
     public static char error='n';
-    public static String admin_uid=null;
+    public static String curr_uid=null;
     public static String totalRatings=null;
     public static String rat=null;
     public static String role=null;
+    public static boolean fromVlogList=false;
+    public static boolean isFullscreen=false;
+    public static YouTubePlayer player;
+    public static YouTubePlayerView youTubeView;
    /* public static String uName=null;
     public static String rev=null;
     public static String urating= null;
@@ -94,7 +100,44 @@ public class Constant {
     public static ArrayList<String> weatherTime=new ArrayList<>();
 
 
+    public static ArrayList<String> videoTitle=new ArrayList<>();
+    public static ArrayList<String> videoId=new ArrayList<>();
+    public static ArrayList<String> videoDate=new ArrayList<>();
+    public static ArrayList<String> vlogger=new ArrayList<>();
+    public static ArrayList<String> videoLocation=new ArrayList<>();
+
+
+    public static ArrayList<String> packageName=new ArrayList<>();
+    public static ArrayList<String> packageCost=new ArrayList<>();
+    public static ArrayList<String> packageLocation=new ArrayList<>();
+    public static ArrayList<String> packageDuration=new ArrayList<>();
+    public static ArrayList<String> packageAgencyName=new ArrayList<>();
+    public static ArrayList<String> journeyDate=new ArrayList<>();
+    public static ArrayList<String> touristCapacity=new ArrayList<>();
+    public static ArrayList<String> packageThumbnail=new ArrayList<>();
+    public static ArrayList<String> packageId=new ArrayList<>();
+    public static ArrayList<String> packageAgencyId=new ArrayList<>();
+    //public static ArrayList<HashMap<String,String> > packageSegment=new ArrayList<>();
+
+
+    public static ArrayList<String> touristName=new ArrayList<>();
+    public static ArrayList<String> touristContact=new ArrayList<>();
+    public static ArrayList<String> touristMember=new ArrayList<>();
+    public static ArrayList<String> date=new ArrayList<>();
+    public static ArrayList<String> time=new ArrayList<>();
+    public static ArrayList<String> packageStatus=new ArrayList<>();
+
+
     public static int stepCount=0;
+
+
+    public interface onBookingAccept{
+        void onBookingAccept(int position);
+    }
+
+    public interface onBookingReject{
+        void onBookingReject(int position);
+    }
 
 
 }

@@ -23,6 +23,11 @@
             android:icon="@drawable/ic_twotone_reviews"
             />
         <item
+            android:id="@+id/vlog"
+            android:title="@string/your_vlog"
+            android:icon="@drawable/ic_twotone_reviews"
+            />
+        <item
             android:id="@+id/sugg"
             android:title="@string/any_suggestion"
             android:icon="@drawable/ic_twotone_feedback"

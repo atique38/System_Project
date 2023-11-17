@@ -28,6 +28,7 @@ public class ProductImageAdapter extends SliderViewAdapter<ProductImageAdapter.V
     @Override
     public void onBindViewHolder(ViewHolderVH viewHolder, int position) {
         String url= Constant.productImg.get(position);
+        //System.out.println(url);
         Glide.with(viewHolder.itemView).load(url).into(viewHolder.img);
     }
 

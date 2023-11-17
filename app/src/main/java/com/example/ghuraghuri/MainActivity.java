@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     ProgressBar progressBar;
     SliderView slide;
-    RelativeLayout spot,shop,cart;
+    RelativeLayout spot,shop,cart,vlog,tourPackage;
 
     FirebaseAuth auth;
 
@@ -68,8 +68,12 @@ public class MainActivity extends AppCompatActivity {
         spot=findViewById(R.id.spot_click);
         shop=findViewById(R.id.shop_click);
         cart=findViewById(R.id.cart_click);
+        vlog=findViewById(R.id.vlog_layout);
+        tourPackage=findViewById(R.id.tour_pcg);
 
         auth=FirebaseAuth.getInstance();
+
+        Constant.curr_uid= Objects.requireNonNull(auth.getCurrentUser()).getUid();
 
         //home activity images
         int [] images={R.drawable.test1,
@@ -102,6 +106,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,Cart.class);
+                startActivity(intent);
+            }
+        });
+        vlog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,VlogList.class);
+                startActivity(intent);
+            }
+        });
+        tourPackage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this, PackageListUser.class);
                 startActivity(intent);
             }
         });
@@ -167,6 +185,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.sugg:
                         intent=new Intent(MainActivity.this,Suggestion.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.vlog:
+                        intent=new Intent(MainActivity.this,YourVlog.class);
                         startActivity(intent);
                         break;
 
