@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Bookings extends AppCompatActivity implements Constant.onBookingAccept, Constant.onBookingReject{
+public class Bookings extends AppCompatActivity implements Constant.onAccept, Constant.onReject{
 
     RecyclerView recyclerView;
     BookingAdapter adapter;
@@ -159,7 +159,7 @@ public class Bookings extends AppCompatActivity implements Constant.onBookingAcc
     }
 
     void setInfo(){
-        System.out.println(Constant.touristName.size());
+        //System.out.println(Constant.touristName.size());
         if(packageId.isEmpty()){
             nothing.setVisibility(View.VISIBLE);
         }
@@ -171,7 +171,7 @@ public class Bookings extends AppCompatActivity implements Constant.onBookingAcc
     }
 
     @Override
-    public void onBookingAccept(int position) {
+    public void onAccept(int position) {
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference()
                 .child("Package").child(packageId.get(position));
 
@@ -197,7 +197,7 @@ public class Bookings extends AppCompatActivity implements Constant.onBookingAcc
     }
 
     @Override
-    public void onBookingReject(int position) {
+    public void onReject(int position) {
         DatabaseReference ref2= FirebaseDatabase.getInstance().getReference()
                 .child("Booking").child(bookingId.get(position));
 

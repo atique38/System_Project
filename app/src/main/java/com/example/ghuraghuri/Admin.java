@@ -50,7 +50,7 @@ import java.util.Objects;
 public class Admin extends AppCompatActivity {
 
     Button add_btn,update_btn,save1,save_spot,save_ht,save_rest,add_spot,add_ht,add_rest,save_hospital,save_police,
-            save_bank,save_spec,add_hospital,add_police,add_bank,add_spec,browse;
+            save_bank,save_spec,add_hospital,add_police,add_bank,add_spec,browse,moreInfoSave,moreInfoAnother;
     LinearLayout add_view,update_view;
     CardView p1;
     RelativeLayout layout1;
@@ -59,8 +59,8 @@ public class Admin extends AppCompatActivity {
 
     TextInputLayout rate_edt;
     EditText place_id,place_name,place_des,cost,rating,spt_name,tag,spt_des,ht_name,ht_url,rst_name,rst_latitude,
-            hospital_name,hospital_latitude,bank_name,bank_latitude,hospitalPhn,policePhn,
-            police_name,police_latitude,spec_category,spec_des,imgTitle;
+            hospital_name,hospital_latitude,bank_name,bank_latitude,hospitalPhn,policePhn,spotAddress,zipCode,
+            police_name,police_latitude,spec_category,spec_des,imgTitle,websiteName,websiteUrl;
     Dialog dialog;
 
     String id_code=null;
@@ -72,7 +72,7 @@ public class Admin extends AppCompatActivity {
     ImageAdapter adapter;
     //ArrayList<Uri> uris=new ArrayList<>();
 
-    int ht_count=0,spt_count=0,rest_count=0,hosp_count=0,pol_count=0,bank_count=0,spec_count=0;
+    int ht_count=0,spt_count=0,rest_count=0,hosp_count=0,pol_count=0,bank_count=0,spec_count=0,more_count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +110,10 @@ public class Admin extends AppCompatActivity {
         tag=findViewById(R.id.tg);
         hospitalPhn=findViewById(R.id.hosp_phn);
         policePhn=findViewById(R.id.pol_phn);
+        websiteName=findViewById(R.id.more_info_name);
+        websiteUrl=findViewById(R.id.more_info_url);
+        spotAddress=findViewById(R.id.spot_address);
+        zipCode=findViewById(R.id.zip_code);
 
         save1=findViewById(R.id.plc_save_btn);
         save_spot=findViewById(R.id.spot_save_btn);
@@ -119,6 +123,8 @@ public class Admin extends AppCompatActivity {
         save_bank=findViewById(R.id.bank_save_btn);
         save_police=findViewById(R.id.pol_save_btn);
         save_spec=findViewById(R.id.sp_save_btn);
+        moreInfoSave=findViewById(R.id.more_info_save_btn);
+        moreInfoAnother=findViewById(R.id.more_info_another);
 
         add_spot=findViewById(R.id.spot_add_another);
         add_ht=findViewById(R.id.hotel_another);
@@ -151,16 +157,15 @@ public class Admin extends AppCompatActivity {
         initializePicker();
 
 
-
+        getInformation();
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //add_view.setVisibility(View.VISIBLE);
-                //update_view.setVisibility(View.INVISIBLE);
-                layout1.setVisibility(View.VISIBLE);
-                //p1.setVisibility(View.VISIBLE);
 
-                getInformation();
+                Intent intent=getIntent();
+                finish();
+                startActivity(intent);
+
 
             }
         });
@@ -183,6 +188,13 @@ public class Admin extends AppCompatActivity {
                 //layout1.setVisibility(View.GONE);
             }
         });
+
+        websiteName.addTextChangedListener(watcher);
+        websiteUrl.addTextChangedListener(watcher);
+        spotAddress.addTextChangedListener(watcher);
+        zipCode.addTextChangedListener(watcher);
+
+
 
     }
 
@@ -320,7 +332,6 @@ public class Admin extends AppCompatActivity {
 
             }
         });
-
         add_ht.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -478,6 +489,33 @@ public class Admin extends AppCompatActivity {
             }
         });
 
+        moreInfoSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(id_code!=null && saved_id)
+                {
+                   saveMoreInfo();
+                }
+                else
+                {
+                    Toast.makeText(Admin.this, "No id found", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+        moreInfoAnother.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                websiteName.getText().clear();
+                websiteUrl.getText().clear();
+                websiteName.clearFocus();
+                websiteUrl.clearFocus();
+                moreInfoAnother.setEnabled(false);
+            }
+        });
+
 
     }
 
@@ -489,12 +527,14 @@ public class Admin extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String name,des,cst,rate,plc_tag;
+            String name,des,cst,rate,plc_tag,zip,address;
             name=place_name.getText().toString().trim();
             des=place_des.getText().toString().trim();
             cst=cost.getText().toString().trim();
             rate=rating.getText().toString().trim();
             plc_tag=tag.getText().toString().trim();
+            zip=zipCode.getText().toString().trim();
+            address=spotAddress.getText().toString().trim();
 
 
             boolean rt_ok=false;
@@ -514,7 +554,7 @@ public class Admin extends AppCompatActivity {
             }
 
             save1.setEnabled(!name.isEmpty() && !des.isEmpty() && !cst.isEmpty() && !rate.isEmpty() && !plc_tag.isEmpty()
-                    && rt_ok);
+                    && !zip.isEmpty() && !address.isEmpty() && rt_ok);
 
 
 
@@ -563,6 +603,11 @@ public class Admin extends AppCompatActivity {
             cat=spec_category.getText().toString().trim();
             description=spec_des.getText().toString().trim();
             save_spec.setEnabled(!cat.isEmpty() && !description.isEmpty());
+
+            //more info
+            name=websiteName.getText().toString().trim();
+            url=websiteUrl.getText().toString().trim();
+            moreInfoSave.setEnabled(!name.isEmpty() && !url.isEmpty());
 
         }
 
@@ -816,14 +861,18 @@ public class Admin extends AppCompatActivity {
     }
 
 
+
+
     void savePlaceInfo()
      {
-        String name,des,cst,rate,plc_tag;
+        String name,des,cst,rate,plc_tag,zip,address;
         name=place_name.getText().toString().trim();
         des=place_des.getText().toString().trim();
         cst=cost.getText().toString().trim();
         rate=rating.getText().toString().trim();
         plc_tag=tag.getText().toString().trim();
+        zip=zipCode.getText().toString().trim();
+        address=spotAddress.getText().toString().trim();
 
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference()
                 .child("Places").child(id_code);
@@ -834,6 +883,9 @@ public class Admin extends AppCompatActivity {
         ref.child("Ratings").setValue(rate);
         ref.child("Tag").setValue(plc_tag);
         ref.child("Total ratings").setValue("1");
+        ref.child("Zip").setValue(zip);
+        ref.child("address").setValue(address);
+
 
         DatabaseReference ref2=FirebaseDatabase.getInstance().getReference().child("Place Code");
         ref2.setValue(id_code);
@@ -1134,6 +1186,21 @@ public class Admin extends AppCompatActivity {
             }
         });
 
+    }
+
+    void saveMoreInfo(){
+        String name,url;
+        name=websiteName.getText().toString().trim();
+        url=websiteUrl.getText().toString().trim();
+
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference()
+                .child("Places").child(id_code).child("More");
+
+        //ref.child("Count").setValue(more_count);
+        ref.child(name).setValue(url);
+
+        Toast.makeText(Admin.this, "Information saved", Toast.LENGTH_SHORT).show();
+        moreInfoAnother.setEnabled(true);
     }
 
     void initializePicker()

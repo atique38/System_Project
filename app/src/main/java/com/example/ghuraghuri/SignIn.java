@@ -76,6 +76,7 @@ public class SignIn extends AppCompatActivity {
         SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
         boolean remember=preferences.getBoolean("rem",false);
         boolean rememberAgency=preferences.getBoolean("rem_ag",false);
+        boolean rememberAdmin=preferences.getBoolean("rem_adm",false);
 
         if(remember)
         {
@@ -86,6 +87,11 @@ public class SignIn extends AppCompatActivity {
         else if(rememberAgency){
             Constant.role="Agency";
             Intent intent=new Intent(SignIn.this,Agency.class);
+            startActivity(intent);
+        }
+        else if(rememberAdmin){
+            Constant.role="Admin";
+            Intent intent=new Intent(SignIn.this,AdminDashboard.class);
             startActivity(intent);
         }
 
@@ -204,7 +210,7 @@ public class SignIn extends AppCompatActivity {
                                         Toast.makeText(SignIn.this,"Sign in Successful!",Toast.LENGTH_SHORT).show();
                                         SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
                                         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit=preferences.edit();
-                                        edit.putBoolean("rem",check);
+                                        edit.putBoolean("rem_adm",check);
                                         edit.apply();
 
                                         Intent intent=new Intent(SignIn.this,AdminDashboard.class);
@@ -286,7 +292,8 @@ public class SignIn extends AppCompatActivity {
     public void onBackPressed() {
         if(getIntent().getBooleanExtra("from_main",false) ||
                 getIntent().getBooleanExtra("from_fp",false) ||
-                getIntent().getBooleanExtra("from_agency",false))
+                getIntent().getBooleanExtra("from_agency",false) ||
+                getIntent().getBooleanExtra("from_admin",false))
         {
             finishAffinity();
         }

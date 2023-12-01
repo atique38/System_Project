@@ -26,8 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -40,7 +44,7 @@ public class Cart extends AppCompatActivity {
     EditText address,contact;
 
     Dialog dialog;
-    String uid,uName;
+    String uid,uName,totalCostOrder;
     ArrayList<String> thumb=new ArrayList<>();
 
     @Override
@@ -84,9 +88,11 @@ public class Cart extends AppCompatActivity {
                 dialog.show();
                 long totalCost=0;
                 for(int i=0;i<Constant.productSubtotal.size();i++){
-                    totalCost+=Long.parseLong(Constant.productSubtotal.get(i));
+                    String tk=Constant.productSubtotal.get(i).replace("tk","").trim();
+                    totalCost+=Long.parseLong(tk);
                 }
-                String totaltxt=totalCost+"tk";
+                String totaltxt= totalCost +"tk";
+                totalCostOrder=String.valueOf(totalCost);
                 confirmTotal.setText(totaltxt);
             }
         });
@@ -247,6 +253,13 @@ public class Cart extends AppCompatActivity {
                 .child("Product");
         String orderid=ref.push().getKey();
 
+        Date date= Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+        String formattedDate = dateFormat.format(date);
+        String formattedTime = timeFormat.format(date);
+
         assert orderid != null;
         ref=ref.child("Orders").child(orderid);
 
@@ -254,6 +267,9 @@ public class Cart extends AppCompatActivity {
         ref.child("address").setValue(adrs);
         ref.child("contact").setValue(contactNo);
         ref.child("status").setValue("Pending");
+        ref.child("date").setValue(formattedDate);
+        ref.child("time").setValue(formattedTime);
+        ref.child("total").setValue(totalCostOrder);
 
         ArrayList<HashMap<String,Object> >orderList=new ArrayList<>();
 

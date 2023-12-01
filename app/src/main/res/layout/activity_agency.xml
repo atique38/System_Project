@@ -12,11 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/heading">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true"
-            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:fontFamily="@font/merienda_one"
             android:text="Agency Dashboard"
             android:textColor="@color/text"

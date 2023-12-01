@@ -136,7 +136,7 @@
     <string name="segemnt_demo">e.g. transport, accommodation, tour plan etc. as your requirement</string>
     <string name="details2">Details</string>
     <string name="basic_info">Basic info.</string>
-    <string name="message">**You must save basic info first. Then you can fill up other segments of respective package**</string>
+    <string name="message">**You must save basic info first. Then you can fill up other segments**</string>
     <string name="tour_packages">Tour Packages</string>
     <string name="contact_info">Contact info.</string>
     <string name="whatsapp">Whatsapp</string>
@@ -144,5 +144,14 @@
     <string name="phone_no">Phone no:</string>
     <string name="number_of_tourist">Number of tourist</string>
     <string name="no_bookings_pending">No bookings pending</string>
+    <string name="recommended_for_you">Recommended for you</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="website_name">Website Name</string>
+    <string name="your_blog">Your Blog</string>
+    <string name="add_blog">Add blog</string>
+    <string name="date">18/11/2023</string>
+    <string name="order_id">order_id</string>
+    <string name="order_list">Order List</string>
+    <string name="no_orders">No Orders</string>
 
 </resources>

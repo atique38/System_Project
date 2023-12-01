@@ -28,6 +28,11 @@
             android:icon="@drawable/ic_twotone_reviews"
             />
         <item
+            android:id="@+id/blog"
+            android:title="@string/your_blog"
+            android:icon="@drawable/ic_baseline_note_alt_24"
+            />
+        <item
             android:id="@+id/sugg"
             android:title="@string/any_suggestion"
             android:icon="@drawable/ic_twotone_feedback"

@@ -71,7 +71,9 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 else if(Constant.point=='h')
                 {
                     String url=Constant.url.get(position);
-                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    //Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    Intent intent=new Intent(context,WebViewDisplay.class);
+                    intent.putExtra("url",url);
                     context.startActivity(intent);
                 }
                 else if(Constant.point=='r' || Constant.point=='l' || Constant.point=='b')
@@ -79,7 +81,9 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
                     //String geoUri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude;
                     String url=Constant.url.get(position);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    Intent intent=new Intent(context,WebViewDisplay.class);
+                    intent.putExtra("url",url);
+                    //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     context.startActivity(intent);
 
                 }

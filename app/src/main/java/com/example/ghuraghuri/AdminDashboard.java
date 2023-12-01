@@ -6,10 +6,13 @@ import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +25,10 @@ public class AdminDashboard extends AppCompatActivity {
     TextView userCount,agencyCount,spotCount;
     CardView addSpot,addProduct,order;
 
+    ImageView settings;
+    RelativeLayout settingLayout;
+    TextView account,logOut;
+
     long current;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +40,42 @@ public class AdminDashboard extends AppCompatActivity {
         addSpot=findViewById(R.id.add_place);
         addProduct=findViewById(R.id.add_product);
         order=findViewById(R.id.orders);
+        settings=findViewById(R.id.settings);
+        settingLayout=findViewById(R.id.settings_layout);
+        account=findViewById(R.id.admin_account);
+        logOut=findViewById(R.id.admin_logout);
+
 
         countUser();
         countAgency();
         countSpot();
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (settingLayout.getVisibility()==View.VISIBLE){
+                    settingLayout.setVisibility(View.GONE);
+                }
+                else if (settingLayout.getVisibility()==View.GONE){
+                    settingLayout.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
+                SharedPreferences.Editor edit=preferences.edit();
+                edit.putBoolean("rem_adm",false);
+                edit.apply();
+
+                Intent intent=new Intent(AdminDashboard.this,SignIn.class);
+                intent.putExtra("from_admin",true);
+                startActivity(intent);
+            }
+        });
 
         addSpot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +90,14 @@ public class AdminDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(AdminDashboard.this,AddProduct.class);
+                startActivity(intent);
+            }
+        });
+
+        order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(AdminDashboard.this,OrderList.class);
                 startActivity(intent);
             }
         });

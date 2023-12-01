@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingViewHolder>{
 
     Context context;
-    Constant.onBookingAccept acceptListener;
-    Constant.onBookingReject rejectListener;
+    Constant.onAccept acceptListener;
+    Constant.onReject rejectListener;
 
-    public BookingAdapter(Context context, Constant.onBookingAccept acceptListener, Constant.onBookingReject rejectListener) {
+    public BookingAdapter(Context context, Constant.onAccept acceptListener, Constant.onReject rejectListener) {
         this.context = context;
         this.acceptListener = acceptListener;
         this.rejectListener = rejectListener;
@@ -49,7 +49,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             @Override
             public void onClick(View view) {
                 if (acceptListener != null) {
-                    acceptListener.onBookingAccept(holder.getAdapterPosition());
+                    acceptListener.onAccept(holder.getAdapterPosition());
                 }
             }
         });
@@ -58,7 +58,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             @Override
             public void onClick(View view) {
                 if(rejectListener!=null){
-                    rejectListener.onBookingReject(holder.getAdapterPosition());
+                    rejectListener.onReject(holder.getAdapterPosition());
                 }
             }
         });

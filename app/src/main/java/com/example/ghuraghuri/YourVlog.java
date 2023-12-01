@@ -204,9 +204,10 @@ public class YourVlog extends AppCompatActivity {
                         Constant.vlogger.add(Objects.requireNonNull(snapshot1.child("vlogger").getValue()).toString());
                         Constant.videoLocation.add(Objects.requireNonNull(snapshot1.child("location").getValue()).toString());
                     }
-                    setAdapter();
+
 
                 }
+                setAdapter();
             }
 
             @Override

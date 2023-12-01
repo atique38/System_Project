@@ -3,17 +3,19 @@ package com.example.ghuraghuri;
 import android.net.Uri;
 
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Constant {
     public static char ch='n';
     public static char point='n';
     public static char error='n';
-    public static String curr_uid=null;
+    public static String curr_uid= "";
     public static String totalRatings=null;
     public static String rat=null;
     public static String role=null;
@@ -127,16 +129,34 @@ public class Constant {
     public static ArrayList<String> time=new ArrayList<>();
     public static ArrayList<String> packageStatus=new ArrayList<>();
 
+    public static ArrayList<String> blogTitle=new ArrayList<>();
+    public static ArrayList<String> blogLocation=new ArrayList<>();
+    public static ArrayList<String> blogDetails=new ArrayList<>();
+    public static ArrayList<String> blogDate=new ArrayList<>();
+    public static ArrayList<String> bloggerName=new ArrayList<>();
+    public static ArrayList<String> blogThumb=new ArrayList<>();
+    public static ArrayList<String> blogId=new ArrayList<>();
+
+    public static ArrayList<String> orderId=new ArrayList<>();
+    public static ArrayList<String> orderDate=new ArrayList<>();
+    public static ArrayList<String> orderTime=new ArrayList<>();
+    public static ArrayList<String> customerName=new ArrayList<>();
+    public static ArrayList<String> orderTotal=new ArrayList<>();
+    public static ArrayList<String> customerPhoneNo=new ArrayList<>();
+    public static ArrayList<String> customerAddress=new ArrayList<>();
+
+
+
 
     public static int stepCount=0;
 
 
-    public interface onBookingAccept{
-        void onBookingAccept(int position);
+    public interface onAccept{
+        void onAccept(int position);
     }
 
-    public interface onBookingReject{
-        void onBookingReject(int position);
+    public interface onReject{
+        void onReject(int position);
     }
 
 

@@ -99,6 +99,16 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message"
+            android:textSize="18sp"
+            android:textColor="#FF0000"
+            android:layout_marginTop="10dp"
+            android:justificationMode="inter_word"
+            tools:targetApi="o" />
+
         <RelativeLayout
             android:id="@+id/l1"
             android:layout_width="match_parent"
@@ -132,6 +142,14 @@
                             android:layout_height="match_parent"
                             android:layout_margin="20dp"
                             android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/basic_info"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/baloo"
+                                android:textSize="20sp"/>
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="match_parent"
@@ -233,6 +251,46 @@
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/add_cost"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="number"
+                                    android:textColor="@color/black"
+                                    tools:ignore="SpeakableTextPresentCheck" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:hint="@string/address"
+                                app:boxStrokeColor="@color/text"
+                                app:boxStrokeWidthFocused="2dp"
+                                app:hintTextColor="@color/black"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/spot_address"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:textColor="@color/black"
+                                    tools:ignore="SpeakableTextPresentCheck" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:hint="@string/zip_code"
+                                app:boxStrokeColor="@color/text"
+                                app:boxStrokeWidthFocused="2dp"
+                                app:hintTextColor="@color/black"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/zip_code"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:inputType="number"
@@ -1152,6 +1210,120 @@
                         </LinearLayout>
 
                     </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/last"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#F5FBFB">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_margin="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/more_info"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/baloo"
+                                android:textSize="20sp"/>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:hint="@string/website_name"
+                                app:boxStrokeColor="@color/text"
+                                app:boxStrokeWidthFocused="2dp"
+                                app:hintTextColor="@color/black"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                >
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/more_info_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:textColor="@color/black"
+                                    tools:ignore="SpeakableTextPresentCheck" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:hint="@string/url"
+                                app:boxStrokeColor="@color/text"
+                                app:boxStrokeWidthFocused="2dp"
+                                app:hintTextColor="@color/black"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                >
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/more_info_url"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:textColor="@color/black"
+                                    tools:ignore="SpeakableTextPresentCheck" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                >
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/more_info_save_btn"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:text="@string/save"
+                                    android:textAllCaps="false"
+                                    android:background="@drawable/button2"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="24sp"
+                                    android:padding="10dp"
+                                    android:enabled="false"
+                                    />
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/more_info_another"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/add_another"
+                                    android:textAllCaps="false"
+                                    android:background="@drawable/button2"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="22sp"
+                                    android:padding="10dp"
+                                    android:enabled="false"
+                                    />
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
 
                 </androidx.cardview.widget.CardView>
 
