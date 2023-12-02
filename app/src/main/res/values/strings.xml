@@ -153,5 +153,6 @@
     <string name="order_id">order_id</string>
     <string name="order_list">Order List</string>
     <string name="no_orders">No Orders</string>
+    <string name="chatbot">ChatBot</string>
 
 </resources>

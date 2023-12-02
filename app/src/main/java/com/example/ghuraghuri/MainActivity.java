@@ -58,7 +58,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView menu_img;
+    ImageView menu_img,chatbot;
     TextView nothing;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         tourPackage = findViewById(R.id.tour_pcg);
         recyclerView=findViewById(R.id.recView_home);
         nothing=findViewById(R.id.noth);
+        chatbot=findViewById(R.id.bot);
 
         auth = FirebaseAuth.getInstance();
 
@@ -163,6 +164,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, BlogList.class);
+                startActivity(intent);
+            }
+        });
+
+        chatbot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,ChatBot.class);
                 startActivity(intent);
             }
         });
